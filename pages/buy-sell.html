@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PetPals - Find your perfect pet companion or help a pet find their forever home">
+    <title>Buy & Sell Pets - PetPals</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Page-specific styles */
+        .pets-header {
+            background-color: var(--off-white);
+            padding: var(--spacing-xl) 0;
+            text-align: center;
+        }
+        
+        .pets-header h1 {
+            margin-bottom: var(--spacing-md);
+            color: var(--dark);
+        }
+        
+        .pets-header p {
+            max-width: 800px;
+            margin: 0 auto var(--spacing-lg);
+            color: var(--dark-gray);
+        }
+        
+        .filter-section {
+            background-color: var(--white);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .filter-group select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: var(--font-base);
+        }
+        
+        .filter-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .pets-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .pet-card {
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        
+        .pet-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .pet-image {
+            height: 200px;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .pet-details {
+            padding: var(--spacing-lg);
+        }
+        
+        .pet-name {
+            font-size: var(--font-lg);
+            margin-bottom: var(--spacing-xs);
+            color: var(--dark);
+        }
+        
+        .pet-breed {
+            color: var(--medium-gray);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .pet-meta {
+            display: flex;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .pet-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--dark-gray);
+            font-size: var(--font-sm);
+        }
+        
+        .pet-description {
+            margin-bottom: var(--spacing-md);
+            color: var(--dark-gray);
+            display: -webkit-box;
+            /* -webkit-line-clamp: 3; */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .pet-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .pet-feature {
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            font-size: var(--font-xs);
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+        }
+        
+        .pet-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .pet-status {
+            background-color: var(--accent-green);
+            color: var(--white);
+            font-size: var(--font-xs);
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+        }
+        
+        .adoption-process {
+            padding: var(--spacing-2xl) 0;
+            background-color: var(--off-white);
+        }
+        
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .process-step {
+            text-align: center;
+            position: relative;
+        }
+        
+        .process-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 40px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-light);
+            z-index: 1;
+        }
+        
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-xl);
+            font-weight: 700;
+            margin: 0 auto var(--spacing-md);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .step-description {
+            color: var(--dark-gray);
+            font-size: var(--font-sm);
+        }
+        
+        .adoption-cta {
+            background-color: var(--primary-light);
+            padding: var(--spacing-2xl) 0;
+            text-align: center;
+        }
+        
+        .adoption-cta h2 {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+        }
+        
+        @media screen and (max-width: 992px) {
+            .pets-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .process-steps {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--spacing-xl) var(--spacing-lg);
+            }
+            
+            .process-step:nth-child(2)::after {
+                display: none;
+            }
+            
+            .process-step:nth-child(1)::after,
+            .process-step:nth-child(3)::after {
+                right: -25%;
+                width: 50%;
+            }
+            
+            .process-step:nth-child(3)::after {
+                top: -40px;
+                right: 75%;
+                width: 2px;
+                height: 40px;
+                transform: rotate(90deg);
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .filter-options {
+                flex-direction: column;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+        }
+        
+        @media screen and (max-width: 576px) {
+            .pets-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+            
+            .process-step::after {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="../index.html" class="logo">
+                    <svg width="150" height="50" viewBox="0 0 150 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M25 10C27.7614 10 30 12.2386 30 15C30 17.7614 27.7614 20 25 20C22.2386 20 20 17.7614 20 15C20 12.2386 22.2386 10 25 10Z" fill="#FF6B6B"/>
+                        <path d="M35 25C37.7614 25 40 27.2386 40 30C40 32.7614 37.7614 35 35 35C32.2386 35 30 32.7614 30 30C30 27.2386 32.2386 25 35 25Z" fill="#FF6B6B"/>
+                        <path d="M15 25C17.7614 25 20 27.2386 20 30C20 32.7614 17.7614 35 15 35C12.2386 35 10 32.7614 10 30C10 27.2386 12.2386 25 15 25Z" fill="#FF6B6B"/>
+                        <path d="M20 40C22.7614 40 25 42.2386 25 45C25 47.7614 22.7614 50 20 50C17.2386 50 15 47.7614 15 45C15 42.2386 17.2386 40 20 40Z" fill="#FF6B6B"/>
+                        <path d="M30 40C32.7614 40 35 42.2386 35 45C35 47.7614 32.7614 50 30 50C27.2386 50 25 47.7614 25 45C25 42.2386 27.2386 40 30 40Z" fill="#FF6B6B"/>
+                        <text x="55" y="35" font-family="Poppins" font-size="24" font-weight="bold" fill="#4D4D4D">PetPals</text>
+                    </svg>
+                </a>
+                
+                <nav class="desktop-nav">
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="buy-sell.html" class="active">Buy/Sell Pets</a></li>
+                        <li><a href="shop.html">Pet Shop</a></li>
+                        <li><a href="medical.html">Medical Care</a></li>
+                        <li><a href="boarding.html">Pet Boarding</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="header-right">
+                    <a href="shop.html#cart" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                    <div class="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-menu">
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="buy-sell.html" class="active">Buy/Sell Pets</a></li>
+            <li><a href="shop.html">Pet Shop</a></li>
+            <li><a href="medical.html">Medical Care</a></li>
+            <li><a href="boarding.html">Pet Boarding</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <section class="pets-header">
+            <div class="container">
+                <h1>Find Your Perfect Companion</h1>
+                <p>Browse our selection of pets looking for their forever homes, or list your pet for adoption. We ensure all our pets are healthy, vaccinated, and ready to become part of your family.</p>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="filter-section">
+                <h2>Find Pets</h2>
+                <div class="filter-options">
+                    <div class="filter-group">
+                        <label for="pet-type">Pet Type</label>
+                        <select id="pet-type">
+                            <option value="all">All Types</option>
+                            <option value="dog">Dogs</option>
+                            <option value="cat">Cats</option>
+                            <option value="small-pet">Small Pets</option>
+                            <option value="bird">Birds</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="breed">Breed</label>
+                        <select id="breed">
+                            <option value="all">All Breeds</option>
+                            <!-- Dynamic options based on pet type selection -->
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="age">Age</label>
+                        <select id="age">
+                            <option value="all">All Ages</option>
+                            <option value="puppy-kitten">Puppy/Kitten</option>
+                            <option value="young">Young</option>
+                            <option value="adult">Adult</option>
+                            <option value="senior">Senior</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="location">Location</label>
+                        <select id="location">
+                            <option value="all">All Locations</option>
+                            <option value="new-york">New York, NY</option>
+                            <option value="los-angeles">Los Angeles, CA</option>
+                            <option value="chicago">Chicago, IL</option>
+                            <option value="houston">Houston, TX</option>
+                            <option value="miami">Miami, FL</option>
+                            <!-- Add more locations -->
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="filter-actions">
+                    <button id="reset-filters" class="btn secondary-btn">Reset Filters</button>
+                    <button id="apply-filters" class="btn primary-btn">Apply Filters</button>
+                </div>
+            </div>
+
+            <div class="pets-grid" id="pets-grid">
+                <!-- Pet cards will be generated here by JavaScript -->
+            </div>
+        </section>
+
+        <section class="adoption-process">
+            <div class="container">
+                <h2 class="section-title">Our Adoption Process</h2>
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h3 class="step-title">Browse & Select</h3>
+                        <p class="step-description">Browse our available pets and find your perfect match based on your lifestyle and preferences.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h3 class="step-title">Submit Application</h3>
+                        <p class="step-description">Fill out our detailed adoption application so we can ensure a good fit for both you and the pet.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h3 class="step-title">Meet & Greet</h3>
+                        <p class="step-description">Schedule a time to meet your potential new family member in person or via video call.</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <h3 class="step-title">Welcome Home</h3>
+                        <p class="step-description">Complete the adoption process, pay any required fees, and welcome your new pet into their forever home!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="adoption-cta">
+            <div class="container">
+                <h2>Have a Pet That Needs a New Home?</h2>
+                <div class="cta-buttons">
+                    <a href="#" class="btn primary-btn">List Your Pet</a>
+                    <a href="#" class="btn secondary-btn">Learn About Our Rehoming Program</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <a href="../index.html" class="footer-logo">
+                        <svg width="150" height="50" viewBox="0 0 150 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M25 10C27.7614 10 30 12.2386 30 15C30 17.7614 27.7614 20 25 20C22.2386 20 20 17.7614 20 15C20 12.2386 22.2386 10 25 10Z" fill="#FFFFFF"/>
+                            <path d="M35 25C37.7614 25 40 27.2386 40 30C40 32.7614 37.7614 35 35 35C32.2386 35 30 32.7614 30 30C30 27.2386 32.2386 25 35 25Z" fill="#FFFFFF"/>
+                            <path d="M15 25C17.7614 25 20 27.2386 20 30C20 32.7614 17.7614 35 15 35C12.2386 35 10 32.7614 10 30C10 27.2386 12.2386 25 15 25Z" fill="#FFFFFF"/>
+                            <path d="M20 40C22.7614 40 25 42.2386 25 45C25 47.7614 22.7614 50 20 50C17.2386 50 15 47.7614 15 45C15 42.2386 17.2386 40 20 40Z" fill="#FFFFFF"/>
+                            <path d="M30 40C32.7614 40 35 42.2386 35 45C35 47.7614 32.7614 50 30 50C27.2386 50 25 47.7614 25 45C25 42.2386 27.2386 40 30 40Z" fill="#FFFFFF"/>
+                            <text x="55" y="35" font-family="Poppins" font-size="24" font-weight="bold" fill="#FFFFFF">PetPals</text>
+                        </svg>
+                    </a>
+                    <p>Your one-stop destination for all pet services - because your pets deserve the best!</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="buy-sell.html">Buy/Sell Pets</a></li>
+                        <li><a href="shop.html">Pet Shop</a></li>
+                        <li><a href="medical.html">Medical Care</a></li>
+                        <li><a href="boarding.html">Pet Boarding</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Help & Support</h3>
+                    <ul>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Pet Street, Animal City</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> support@petpals.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 PetPals. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="scroll-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/products.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const petsGrid = document.getElementById('pets-grid');
+            const petTypeSelect = document.getElementById('pet-type');
+            const breedSelect = document.getElementById('breed');
+            const ageSelect = document.getElementById('age');
+            const locationSelect = document.getElementById('location');
+            const applyFiltersBtn = document.getElementById('apply-filters');
+            const resetFiltersBtn = document.getElementById('reset-filters');
+            
+            // Initialize pet cards
+            renderPetCards(petsData);
+            
+            // Update breed options based on pet type selection
+            petTypeSelect.addEventListener('change', function() {
+                updateBreedOptions(this.value);
+            });
+            
+            // Apply filters
+            applyFiltersBtn.addEventListener('click', function() {
+                applyFilters();
+            });
+            
+            // Reset filters
+            resetFiltersBtn.addEventListener('click', function() {
+                resetFilters();
+            });
+            
+            // Function to render pet cards
+            function renderPetCards(pets) {
+                petsGrid.innerHTML = '';
+                
+                if (pets.length === 0) {
+                    petsGrid.innerHTML = `
+                        <div class="no-results" style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+                            <i class="fas fa-search" style="font-size: 3rem; color: var(--light-gray); margin-bottom: 1rem;"></i>
+                            <h3>No Pets Found</h3>
+                            <p>Try adjusting your filters to see more results.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                pets.forEach(pet => {
+                    const petCard = document.createElement('div');
+                    petCard.className = 'pet-card';
+                    
+                    // Generate random pastel color for pet image background
+                    const hue = Math.floor(Math.random() * 360);
+                    const bgColor = `hsl(${hue}, 70%, 80%)`;
+                    
+                    petCard.innerHTML = `
+                        <div class="pet-image" style="position: relative;">
+                            <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                                <rect width="200" height="200" fill="${bgColor}"/>
+                                ${getPetSvgContent(pet.type)}
+                            </svg>
+                        </div>
+                        <div class="pet-details">
+                            <h3 class="pet-name">${pet.name}</h3>
+                            <p class="pet-breed">${pet.breed}</p>
+                            <div class="pet-meta">
+                                <div class="pet-meta-item">
+                                    <i class="fas fa-birthday-cake"></i>
+                                    <span>${pet.age}</span>
+                                </div>
+                                <div class="pet-meta-item">
+                                    <i class="fas ${pet.gender === 'Male' ? 'fa-mars' : 'fa-venus'}"></i>
+                                    <span>${pet.gender}</span>
+                                </div>
+                                <div class="pet-meta-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>${pet.location}</span>
+                                </div>
+                            </div>
+                            <p class="pet-description">${pet.description}</p>
+                            <div class="pet-features">
+                                ${pet.features.map(feature => `<span class="pet-feature">${feature}</span>`).join('')}
+                            </div>
+                            <div class="pet-actions">
+                                <span class="pet-status">Available</span>
+                                <a href="#" class="btn-text view-details-btn">View Details <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    `;
+                    
+                    petsGrid.appendChild(petCard);
+                    
+                    // Add event listener to view details button
+                    const viewDetailsBtn = petCard.querySelector('.view-details-btn');
+                    viewDetailsBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        showPetDetails(pet);
+                    });
+                });
+            }
+            
+            // Function to update breed options based on pet type
+            function updateBreedOptions(petType) {
+                breedSelect.innerHTML = '<option value="all">All Breeds</option>';
+                
+                if (petType === 'all') return;
+                
+                // Get unique breeds for selected pet type
+                const breeds = [...new Set(petsData
+                    .filter(pet => pet.type.toLowerCase() === petType || petType === 'all')
+                    .map(pet => pet.breed))];
+                
+                // Add breed options
+                breeds.forEach(breed => {
+                    const option = document.createElement('option');
+                    option.value = breed.toLowerCase().replace(/\s+/g, '-');
+                    option.textContent = breed;
+                    breedSelect.appendChild(option);
+                });
+            }
+            
+            // Function to apply filters
+            function applyFilters() {
+                const petType = petTypeSelect.value;
+                const breed = breedSelect.value;
+                const age = ageSelect.value;
+                const location = locationSelect.value;
+                
+                let filteredPets = [...petsData];
+                
+                // Filter by pet type
+                if (petType !== 'all') {
+                    filteredPets = filteredPets.filter(pet => pet.type.toLowerCase() === petType);
+                }
+                
+                // Filter by breed
+                if (breed !== 'all') {
+                    filteredPets = filteredPets.filter(pet => pet.breed.toLowerCase().replace(/\s+/g, '-') === breed);
+                }
+                
+                // Filter by age
+                if (age !== 'all') {
+                    switch (age) {
+                        case 'puppy-kitten':
+                            filteredPets = filteredPets.filter(pet => pet.age.includes('month') || pet.age.includes('weeks'));
+                            break;
+                        case 'young':
+                            filteredPets = filteredPets.filter(pet => pet.age.includes('1 year') || pet.age.includes('2 year'));
+                            break;
+                        case 'adult':
+                            filteredPets = filteredPets.filter(pet => {
+                                const ageNum = parseInt(pet.age);
+                                return ageNum >= 3 && ageNum <= 7;
+                            });
+                            break;
+                        case 'senior':
+                            filteredPets = filteredPets.filter(pet => {
+                                const ageNum = parseInt(pet.age);
+                                return ageNum > 7;
+                            });
+                            break;
+                    }
+                }
+                
+                // Filter by location
+                if (location !== 'all') {
+                    filteredPets = filteredPets.filter(pet => pet.location.toLowerCase().replace(/,\s+/g, '-').replace(/\s+/g, '-') === location);
+                }
+                
+                // Render filtered pets
+                renderPetCards(filteredPets);
+            }
+            
+            // Function to reset filters
+            function resetFilters() {
+                petTypeSelect.value = 'all';
+                breedSelect.innerHTML = '<option value="all">All Breeds</option>';
+                ageSelect.value = 'all';
+                locationSelect.value = 'all';
+                
+                // Render all pets
+                renderPetCards(petsData);
+            }
+            
+            // Function to show pet details modal
+            function showPetDetails(pet) {
+                // Create modal element if it doesn't exist
+                let modal = document.querySelector('.pet-modal');
+                
+                if (!modal) {
+                    modal = document.createElement('div');
+                    modal.className = 'pet-modal';
+                    document.body.appendChild(modal);
+                    
+                    // Style the modal
+                    modal.style.position = 'fixed';
+                    modal.style.top = '0';
+                    modal.style.left = '0';
+                    modal.style.width = '100%';
+                    modal.style.height = '100%';
+                    modal.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+                    modal.style.display = 'flex';
+                    modal.style.alignItems = 'center';
+                    modal.style.justifyContent = 'center';
+                    modal.style.zIndex = '1000';
+                    modal.style.opacity = '0';
+                    modal.style.transition = 'opacity 0.3s ease';
+                }
+                
+                // Generate random pastel color for pet image background
+                const hue = Math.floor(Math.random() * 360);
+                const bgColor = `hsl(${hue}, 70%, 80%)`;
+                
+                // Set modal content
+                modal.innerHTML = `
+                    <div class="modal-content" style="background-color: white; border-radius: 8px; max-width: 800px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative;">
+                        <button class="close-modal" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer; z-index: 10;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        
+                        <div style="display: flex; flex-wrap: wrap;">
+                            <div style="flex: 1; min-width: 300px; height: 300px; position: relative;">
+                                <svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                                    <rect width="300" height="300" fill="${bgColor}"/>
+                                    ${getPetSvgContent(pet.type, true)}
+                                </svg>
+                            </div>
+                            
+                            <div style="flex: 1; min-width: 300px; padding: 30px;">
+                                <h2 style="font-size: 2rem; margin-bottom: 5px;">${pet.name}</h2>
+                                <p style="font-size: 1.2rem; color: var(--medium-gray); margin-bottom: 15px;">${pet.breed}</p>
+                                
+                                <div style="display: flex; gap: 30px; margin-bottom: 20px;">
+                                    <div style="display: flex; align-items: center; gap: 5px;">
+                                        <i class="fas fa-birthday-cake" style="color: var(--primary-color);"></i>
+                                        <span>${pet.age}</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 5px;">
+                                        <i class="fas ${pet.gender === 'Male' ? 'fa-mars' : 'fa-venus'}" style="color: var(--primary-color);"></i>
+                                        <span>${pet.gender}</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 5px;">
+                                        <i class="fas fa-map-marker-alt" style="color: var(--primary-color);"></i>
+                                        <span>${pet.location}</span>
+                                    </div>
+                                </div>
+                                
+                                <div style="margin-bottom: 20px;">
+                                    <h3 style="margin-bottom: 10px;">About ${pet.name}</h3>
+                                    <p>${pet.description}</p>
+                                </div>
+                                
+                                <div style="margin-bottom: 20px;">
+                                    <h3 style="margin-bottom: 10px;">Features</h3>
+                                    <ul style="list-style-type: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;">
+                                        ${pet.features.map(feature => `
+                                            <li style="display: flex; align-items: center; gap: 5px;">
+                                                <i class="fas fa-check" style="color: var(--accent-green);"></i>
+                                                <span>${feature}</span>
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+                                
+                                <div style="display: flex; gap: 15px;">
+                                    <button class="btn primary-btn">Adopt ${pet.name}</button>
+                                    <button class="btn secondary-btn">Ask About ${pet.name}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Show modal
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+                setTimeout(() => {
+                    modal.style.opacity = '1';
+                }, 10);
+                
+                // Add event listener to close button
+                const closeBtn = modal.querySelector('.close-modal');
+                closeBtn.addEventListener('click', function() {
+                    modal.style.opacity = '0';
+                    setTimeout(() => {
+                        document.body.removeChild(modal);
+                        document.body.style.overflow = 'auto'; // Re-enable scrolling
+                    }, 300);
+                });
+                
+                // Close modal when clicking outside content
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.style.opacity = '0';
+                        setTimeout(() => {
+                            document.body.removeChild(modal);
+                            document.body.style.overflow = 'auto'; // Re-enable scrolling
+                        }, 300);
+                    }
+                });
+            }
+            
+            // Function to get SVG content based on pet type
+            function getPetSvgContent(petType, isLarge = false) {
+                const scale = isLarge ? 1.5 : 1;
+                
+                if (petType.toLowerCase() === 'dog') {
+                    return `
+                        <circle cx="${100 * scale}" cy="${110 * scale}" r="${50 * scale}" fill="#8B4513" />
+                        <circle cx="${75 * scale}" cy="${80 * scale}" r="${15 * scale}" fill="#FFFFFF" />
+                        <circle cx="${125 * scale}" cy="${80 * scale}" r="${15 * scale}" fill="#FFFFFF" />
+                        <circle cx="${75 * scale}" cy="${80 * scale}" r="${7 * scale}" fill="#000000" />
+                        <circle cx="${125 * scale}" cy="${80 * scale}" r="${7 * scale}" fill="#000000" />
+                        <ellipse cx="${100 * scale}" cy="${115 * scale}" rx="${15 * scale}" ry="${10 * scale}" fill="#000000" />
+                        <path d="M${85 * scale} ${130 * scale}C${100 * scale} ${145 * scale}, ${115 * scale} ${130 * scale}, ${115 * scale} ${130 * scale}" stroke="#000000" stroke-width="${3 * scale}" stroke-linecap="round" />
+                        <circle cx="${60 * scale}" cy="${60 * scale}" r="${20 * scale}" fill="#8B4513" />
+                        <circle cx="${140 * scale}" cy="${60 * scale}" r="${20 * scale}" fill="#8B4513" />
+                    `;
+                } else if (petType.toLowerCase() === 'cat') {
+                    return `
+                        <circle cx="${100 * scale}" cy="${110 * scale}" r="${50 * scale}" fill="#808080" />
+                        <polygon points="${50 * scale},${60 * scale} ${80 * scale},${80 * scale} ${60 * scale},${30 * scale}" fill="#808080" />
+                        <polygon points="${150 * scale},${60 * scale} ${120 * scale},${80 * scale} ${140 * scale},${30 * scale}" fill="#808080" />
+                        <circle cx="${80 * scale}" cy="${90 * scale}" r="${10 * scale}" fill="#FFFFFF" />
+                        <circle cx="${120 * scale}" cy="${90 * scale}" r="${10 * scale}" fill="#FFFFFF" />
+                        <circle cx="${80 * scale}" cy="${90 * scale}" r="${5 * scale}" fill="#000000" />
+                        <circle cx="${120 * scale}" cy="${90 * scale}" r="${5 * scale}" fill="#000000" />
+                        <ellipse cx="${100 * scale}" cy="${110 * scale}" rx="${10 * scale}" ry="${5 * scale}" fill="#FF69B4" />
+                        <path d="M${90 * scale} ${120 * scale}C${100 * scale} ${130 * scale}, ${110 * scale} ${120 * scale}, ${110 * scale} ${120 * scale}" stroke="#000000" stroke-width="${2 * scale}" stroke-linecap="round" />
+                        <path d="M${80 * scale} ${75 * scale}L${90 * scale} ${65 * scale}" stroke="#000000" stroke-width="${2 * scale}" stroke-linecap="round" />
+                        <path d="M${75 * scale} ${80 * scale}L${85 * scale} ${70 * scale}" stroke="#000000" stroke-width="${2 * scale}" stroke-linecap="round" />
+                        <path d="M${120 * scale} ${75 * scale}L${110 * scale} ${65 * scale}" stroke="#000000" stroke-width="${2 * scale}" stroke-linecap="round" />
+                        <path d="M${125 * scale} ${80 * scale}L${115 * scale} ${70 * scale}" stroke="#000000" stroke-width="${2 * scale}" stroke-linecap="round" />
+                    `;
+                } else {
+                    // Generic pet silhouette
+                    return `
+                        <circle cx="${100 * scale}" cy="${100 * scale}" r="${60 * scale}" fill="#A0A0A0" />
+                        <circle cx="${80 * scale}" cy="${80 * scale}" r="${10 * scale}" fill="#FFFFFF" />
+                        <circle cx="${120 * scale}" cy="${80 * scale}" r="${10 * scale}" fill="#FFFFFF" />
+                        <circle cx="${80 * scale}" cy="${80 * scale}" r="${5 * scale}" fill="#000000" />
+                        <circle cx="${120 * scale}" cy="${80 * scale}" r="${5 * scale}" fill="#000000" />
+                        <path d="M${80 * scale} ${120 * scale}C${100 * scale} ${140 * scale}, ${120 * scale} ${120 * scale}, ${120 * scale} ${120 * scale}" stroke="#000000" stroke-width="${3 * scale}" stroke-linecap="round" />
+                    `;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

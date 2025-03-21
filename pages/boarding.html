@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PetPals - Safe and comfortable pet boarding services while you're away on vacation or business trips">
+    <title>Pet Boarding - PetPals</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Page-specific styles */
+        .boarding-header {
+            background-color: var(--accent-blue);
+            padding: var(--spacing-3xl) 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .boarding-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 25C53 25 55 27 55 30C55 33 53 35 50 35C47 35 45 33 45 30C45 27 47 25 50 25Z' fill='white' fill-opacity='0.1'/%3E%3Cpath d='M70 40C73 40 75 42 75 45C75 48 73 50 70 50C67 50 65 48 65 45C65 42 67 40 70 40Z' fill='white' fill-opacity='0.1'/%3E%3Cpath d='M30 40C33 40 35 42 35 45C35 48 33 50 30 50C27 50 25 48 25 45C25 42 27 40 30 40Z' fill='white' fill-opacity='0.1'/%3E%3Cpath d='M60 60C63 60 65 62 65 65C65 68 63 70 60 70C57 70 55 68 55 65C55 62 57 60 60 60Z' fill='white' fill-opacity='0.1'/%3E%3Cpath d='M40 60C43 60 45 62 45 65C45 68 43 70 40 70C37 70 35 68 35 65C35 62 37 60 40 60Z' fill='white' fill-opacity='0.1'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            opacity: 0.3;
+        }
+        
+        .boarding-header .container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--spacing-2xl);
+        }
+        
+        .header-content {
+            flex: 1;
+            color: var(--white);
+        }
+        
+        .header-content h1 {
+            color: var(--white);
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-3xl);
+        }
+        
+        .header-content p {
+            color: var(--white);
+            margin-bottom: var(--spacing-lg);
+            font-size: var(--font-lg);
+            opacity: 0.9;
+        }
+        
+        .header-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .boarding-options {
+            padding: var(--spacing-3xl) 0;
+        }
+        
+        .pet-type-filter {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .pet-filter-btn {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            border: 2px solid var(--light-gray);
+            border-radius: var(--radius-full);
+            padding: 10px 20px;
+            font-size: var(--font-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .pet-filter-btn:hover {
+            background-color: var(--light-gray);
+        }
+        
+        .pet-filter-btn.active {
+            background-color: var(--accent-blue);
+            color: var(--white);
+            border-color: var(--accent-blue);
+        }
+        
+        .pet-filter-btn i {
+            font-size: var(--font-md);
+        }
+        
+        .boarding-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .boarding-card {
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        
+        .boarding-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .boarding-image {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .premium-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--accent-yellow);
+            color: var(--dark);
+            font-size: var(--font-xs);
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: var(--radius-full);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .boarding-details {
+            padding: var(--spacing-lg);
+        }
+        
+        .boarding-name {
+            font-size: var(--font-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--dark);
+        }
+        
+        .boarding-pet-type {
+            color: var(--accent-blue);
+            font-size: var(--font-sm);
+            font-weight: 500;
+            margin-bottom: var(--spacing-sm);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .boarding-pet-type i {
+            font-size: var(--font-base);
+        }
+        
+        .boarding-price {
+            font-size: var(--font-md);
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .boarding-price span {
+            font-size: var(--font-sm);
+            font-weight: 400;
+            color: var(--medium-gray);
+        }
+        
+        .boarding-description {
+            color: var(--dark-gray);
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-sm);
+            line-height: 1.6;
+        }
+        
+        .boarding-features {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .boarding-feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: var(--font-sm);
+            color: var(--dark-gray);
+        }
+        
+        .boarding-feature i {
+            color: var(--accent-blue);
+        }
+        
+        .book-now-btn {
+            width: 100%;
+        }
+        
+        .facilities-section {
+            padding: var(--spacing-3xl) 0;
+            background-color: var(--off-white);
+        }
+        
+        .facilities-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .facility-card {
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: var(--spacing-lg);
+            text-align: center;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        
+        .facility-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .facility-icon {
+            width: 70px;
+            height: 70px;
+            background-color: var(--light-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--spacing-md);
+            color: var(--accent-blue);
+            font-size: var(--font-2xl);
+        }
+        
+        .facility-name {
+            font-size: var(--font-md);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--dark);};
+
+
+
+
+
+            
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PetPals - Safe and comfortable boarding facilities for your pets while you're away">
+    <title>Pet Boarding - PetPals</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Page-specific styles */
+        .boarding-header {
+            background-color: var(--accent-blue);
+            padding: var(--spacing-3xl) 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .boarding-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 25C53 25 55 27 55 30C55 33 53 35 50 35C47 35 45 33 45 30C45 27 47 25 50 25Z' fill='white' fill-opacity='0.1'/%3E%3Cpath d='M70 40C73 40 75 42 75 45C75 48 73 50 70 50C67 50 65 48 65 45C65 42 67 40 70 40Z' fill='white' fill-opacity='0.1'/%3E%3Cpath d='M30 40C33 40 35 42 35 45C35 48 33 50 30 50C27 50 25 48 25 45C25 42 27 40 30 40Z' fill='white' fill-opacity='0.1'/%3E%3Cpath d='M60 60C63 60 65 62 65 65C65 68 63 70 60 70C57 70 55 68 55 65C55 62 57 60 60 60Z' fill='white' fill-opacity='0.1'/%3E%3Cpath d='M40 60C43 60 45 62 45 65C45 68 43 70 40 70C37 70 35 68 35 65C35 62 37 60 40 60Z' fill='white' fill-opacity='0.1'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            opacity: 0.5;
+        }
+        
+        .boarding-header .container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        
+        .boarding-header h1 {
+            color: var(--white);
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-3xl);
+        }
+        
+        .boarding-header p {
+            color: var(--white);
+            max-width: 800px;
+            margin: 0 auto var(--spacing-lg);
+            font-size: var(--font-lg);
+            line-height: 1.6;
+        }
+        
+        .boarding-options {
+            padding: var(--spacing-3xl) 0;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .option-card {
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        
+        .option-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .option-image {
+            height: 200px;
+            background-color: var(--off-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option-details {
+            padding: var(--spacing-lg);
+        }
+        
+        .option-name {
+            font-size: var(--font-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--dark);
+        }
+        
+        .option-price {
+            font-size: var(--font-md);
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .option-description {
+            color: var(--dark-gray);
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-sm);
+            line-height: 1.6;
+        }
+        
+        .option-features {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xs);
+            font-size: var(--font-sm);
+            color: var(--dark-gray);
+        }
+        
+        .feature-item i {
+            color: var(--accent-green);
+            margin-top: 3px;
+        }
+        
+        .pet-type-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-xs);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .facilities-section {
+            padding: var(--spacing-3xl) 0;
+            background-color: var(--off-white);
+        }
+        
+        .facilities-slider {
+            margin-top: var(--spacing-xl);
+            display: flex;
+            gap: var(--spacing-lg);
+            overflow-x: auto;
+            padding-bottom: var(--spacing-lg);
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+        }
+        
+        .facilities-slider::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .facility-card {
+            min-width: 300px;
+            flex: 0 0 300px;
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            scroll-snap-align: start;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        
+        .facility-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .facility-image {
+            height: 200px;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .facility-details {
+            padding: var(--spacing-md);
+        }
+        
+        .facility-title {
+            font-size: var(--font-md);
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--dark);
+        }
+        
+        .facility-description {
+            font-size: var(--font-sm);
+            color: var(--dark-gray);
+        }
+        
+        .testimonials-section {
+            padding: var(--spacing-3xl) 0;
+        }
+        
+        .boarding-testimonials {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .testimonial-card {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-lg);
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: '\201C';
+            font-size: 5rem;
+            position: absolute;
+            top: -15px;
+            left: 10px;
+            color: var(--light-gray);
+            font-family: serif;
+            z-index: 0;
+        }
+        
+        .testimonial-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-text {
+            margin-bottom: var(--spacing-md);
+            font-style: italic;
+            color: var(--dark-gray);
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-full);
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--medium-gray);
+            font-size: var(--font-xl);
+        }
+        
+        .author-info h4 {
+            margin-bottom: 0;
+            font-size: var(--font-base);
+        }
+        
+        .author-pet {
+            color: var(--medium-gray);
+            font-size: var(--font-sm);
+        }
+        
+        .boarding-staff {
+            padding: var(--spacing-3xl) 0;
+            background-color: var(--off-white);
+        }
+        
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .staff-card {
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            text-align: center;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        
+        .staff-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .staff-image {
+            height: 200px;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .staff-details {
+            padding: var(--spacing-md);
+        }
+        
+        .staff-name {
+            font-size: var(--font-md);
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--dark);
+        }
+        
+        .staff-position {
+            font-size: var(--font-sm);
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .staff-bio {
+            font-size: var(--font-sm);
+            color: var(--dark-gray);
+        }
+        
+        .booking-section {
+            padding: var(--spacing-3xl) 0;
+            background-color: var(--primary-light);
+        }
+        
+        .booking-container {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-2xl);
+        }
+        
+        .booking-info {
+            flex: 1;
+        }
+        
+        .booking-info h2 {
+            margin-bottom: var(--spacing-lg);
+            color: var(--dark);
+        }
+        
+        .booking-steps {
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .booking-step {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .step-content h3 {
+            margin-bottom: var(--spacing-xs);
+            font-size: var(--font-md);
+        }
+        
+        .step-content p {
+            color: var(--dark-gray);
+            font-size: var(--font-sm);
+        }
+        
+        .booking-form {
+            flex: 1;
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-xl);
+        }
+        
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: var(--spacing-xs);
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: var(--font-base);
+            color: var(--dark);
+        }
+        
+        .form-row {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .boarding-policies {
+            padding: var(--spacing-3xl) 0;
+        }
+        
+        .policies-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .policy-card {
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            padding: var(--spacing-lg);
+            text-align: center;
+            transition: transform var(--transition-normal);
+        }
+        
+        .policy-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .policy-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .policy-title {
+            font-size: var(--font-md);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--dark);
+        }
+        
+        .policy-description {
+            font-size: var(--font-sm);
+            color: var(--dark-gray);
+        }
+        
+        @media screen and (max-width: 992px) {
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .booking-container {
+                flex-direction: column;
+            }
+            
+            .staff-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .policies-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .booking-header h1 {
+                font-size: var(--font-2xl);
+            }
+            
+            .booking-header p {
+                font-size: var(--font-base);
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .staff-grid,
+            .policies-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="../index.html" class="logo">
+                    <svg width="150" height="50" viewBox="0 0 150 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M25 10C27.7614 10 30 12.2386 30 15C30 17.7614 27.7614 20 25 20C22.2386 20 20 17.7614 20 15C20 12.2386 22.2386 10 25 10Z" fill="#FF6B6B"/>
+                        <path d="M35 25C37.7614 25 40 27.2386 40 30C40 32.7614 37.7614 35 35 35C32.2386 35 30 32.7614 30 30C30 27.2386 32.2386 25 35 25Z" fill="#FF6B6B"/>
+                        <path d="M15 25C17.7614 25 20 27.2386 20 30C20 32.7614 17.7614 35 15 35C12.2386 35 10 32.7614 10 30C10 27.2386 12.2386 25 15 25Z" fill="#FF6B6B"/>
+                        <path d="M20 40C22.7614 40 25 42.2386 25 45C25 47.7614 22.7614 50 20 50C17.2386 50 15 47.7614 15 45C15 42.2386 17.2386 40 20 40Z" fill="#FF6B6B"/>
+                        <path d="M30 40C32.7614 40 35 42.2386 35 45C35 47.7614 32.7614 50 30 50C27.2386 50 25 47.7614 25 45C25 42.2386 27.2386 40 30 40Z" fill="#FF6B6B"/>
+                        <text x="55" y="35" font-family="Poppins" font-size="24" font-weight="bold" fill="#4D4D4D">PetPals</text>
+                    </svg>
+                </a>
+                
+                <nav class="desktop-nav">
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="buy-sell.html">Buy/Sell Pets</a></li>
+                        <li><a href="shop.html">Pet Shop</a></li>
+                        <li><a href="medical.html">Medical Care</a></li>
+                        <li><a href="boarding.html" class="active">Pet Boarding</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="header-right">
+                    <a href="shop.html#cart" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                    <div class="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-menu">
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="buy-sell.html">Buy/Sell Pets</a></li>
+            <li><a href="shop.html">Pet Shop</a></li>
+            <li><a href="medical.html">Medical Care</a></li>
+            <li><a href="boarding.html" class="active">Pet Boarding</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <section class="boarding-header">
+            <div class="container">
+                <h1>Pet Boarding Services</h1>
+                <p>Safe, comfortable, and caring accommodations for your pets while you're away. Our professional staff ensures your furry friends feel at home with personalized attention and plenty of playtime.</p>
+                <a href="#booking" class="btn primary-btn">Book Your Pet's Stay</a>
+            </div>
+        </section>
+
+        <section class="boarding-options">
+            <div class="container">
+                <h2 class="section-title">Our Boarding Options</h2>
+                <div class="options-grid" id="boarding-options-grid">
+                    <!-- Boarding options will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <section class="facilities-section">
+            <div class="container">
+                <h2 class="section-title">Our Facilities</h2>
+                <div class="facilities-slider">
+                    <div class="facility-card">
+                        <div class="facility-image">
+                            <svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="300" height="200" fill="#F0F0F0"/>
+                                <rect x="50" y="50" width="200" height="100" rx="10" fill="#FFFFFF"/>
+                                <rect x="70" y="70" width="50" height="60" rx="5" fill="#FFD166"/>
+                                <rect x="130" y="70" width="50" height="60" rx="5" fill="#FFD166"/>
+                                <rect x="190" y="70" width="40" height="60" rx="5" fill="#FFD166"/>
+                                <path d="M50 130H250" stroke="#DDDDDD" stroke-width="2"/>
+                                <circle cx="80" cy="150" r="10" fill="#FFFFFF"/>
+                                <circle cx="120" cy="150" r="10" fill="#FFFFFF"/>
+                                <circle cx="160" cy="150" r="10" fill="#FFFFFF"/>
+                                <circle cx="200" cy="150" r="10" fill="#FFFFFF"/>
+                                <circle cx="240" cy="150" r="10" fill="#FFFFFF"/>
+                            </svg>
+                        </div>
+                        <div class="facility-details">
+                            <h3 class="facility-title">Indoor Play Area</h3>
+                            <p class="facility-description">Climate-controlled indoor space where pets can play and exercise regardless of weather conditions.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="facility-card">
+                        <div class="facility-image">
+                            <svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="300" height="200" fill="#F0F0F0"/>
+                                <rect x="30" y="120" width="240" height="50" fill="#8BC34A"/>
+                                <path d="M30 120C30 120 70 90 100 90C130 90 150 100 180 100C210 100 240 120 240 120" fill="#8BC34A"/>
+                                <circle cx="80" cy="110" r="10" fill="#FFFFFF"/>
+                                <circle cx="120" cy="100" r="8" fill="#FFFFFF"/>
+                                <circle cx="160" cy="105" r="6" fill="#FFFFFF"/>
+                                <circle cx="200" cy="110" r="9" fill="#FFFFFF"/>
+                                <path d="M50 150L60 130L70 150" stroke="#FFFFFF" stroke-width="2"/>
+                                <path d="M100 150L110 130L120 150" stroke="#FFFFFF" stroke-width="2"/>
+                                <path d="M150 150L160 130L170 150" stroke="#FFFFFF" stroke-width="2"/>
+                                <path d="M200 150L210 130L220 150" stroke="#FFFFFF" stroke-width="2"/>
+                                <path d="M30 80L270 80" stroke="#87CEEB" stroke-width="2"/>
+                                <circle cx="50" cy="60" r="15" fill="#FFEB3B"/>
+                            </svg>
+                        </div>
+                        <div class="facility-details">
+                            <h3 class="facility-title">Outdoor Play Yard</h3>
+                            <p class="facility-description">Secure, fenced outdoor area where pets can run, play and enjoy the fresh air under staff supervision.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="facility-card">
+                        <div class="facility-image">
+                            <svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="300" height="200" fill="#F0F0F0"/>
+                                <rect x="70" y="60" width="160" height="100" rx="10" fill="#FFFFFF"/>
+                                <rect x="90" y="80" width="120" height="60" fill="#E0E0E0"/>
+                                <rect x="110" y="100" width="80" height="25" fill="#A1E8E4"/>
+                                <path d="M90 150C90 150 110 140 150 140C190 140 210 150 210 150" stroke="#FF6B6B" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="facility-details">
+                            <h3 class="facility-title">Grooming Station</h3>
+                            <p class="facility-description">Professional grooming facilities where pets can receive baths, trims, and pampering during their stay.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="facility-card">
+                        <div class="facility-image">
+                            <svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="300" height="200" fill="#F0F0F0"/>
+                                <rect x="50" y="60" width="200" height="100" rx="5" fill="#FFFFFF"/>
+                                <rect x="60" y="70" width="80" height="80" rx="5" fill="#A0C4FF"/>
+                                <rect x="150" y="70" width="90" height="30" fill="#E0E0E0"/>
+                                <rect x="150" y="110" width="40" height="40" fill="#E0E0E0"/>
+                                <rect x="200" y="110" width="40" height="40" fill="#E0E0E0"/>
+                                <circle cx="100" cy="110" r="25" fill="#FFFFFF"/>
+                                <path d="M90 110H110M100 100V120" stroke="#A0C4FF" stroke-width="4" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <div class="facility-details">
+                            <h3 class="facility-title">Health Monitoring</h3>
+                            <p class="facility-description">Regular health checks and immediate access to veterinary care if needed during your pet's stay.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="facility-card">
+                        <div class="facility-image">
+                            <svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="300" height="200" fill="#F0F0F0"/>
+                                <rect x="85" y="50" width="130" height="100" rx="10" fill="#FFFFFF"/>
+                                <rect x="100" y="70" width="100" height="60" rx="5" fill="#BDB2FF"/>
+                                <circle cx="150" cy="100" r="20" fill="#FFFFFF"/>
+                                <path d="M140 100C140 100 145 105 150 105C155 105 160 100 160 100" stroke="#BDB2FF" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="140" cy="90" r="5" fill="#BDB2FF"/>
+                                <circle cx="160" cy="90" r="5" fill="#BDB2FF"/>
+                                <rect x="115" y="140" width="70" height="10" rx="5" fill="#DDDDDD"/>
+                            </svg>
+                        </div>
+                        <div class="facility-details">
+                            <h3 class="facility-title">Webcam Monitoring</h3>
+                            <p class="facility-description">24/7 webcam access so you can check in on your pet anytime during their stay with us.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials-section">
+            <div class="container">
+                <h2 class="section-title">What Pet Parents Say</h2>
+                <div class="boarding-testimonials">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p class="testimonial-text">My dog always comes home happy and tired from playing after staying at PetPals. The staff sends me daily updates and photos, which gives me peace of mind while I'm away.</p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="author-info">
+                                    <h4>Jennifer Thompson</h4>
+                                    <p class="author-pet">Max, Golden Retriever</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p class="testimonial-text">My cats are very particular, but they've always been comfortable at PetPals. The luxury suites are perfect for them, and the staff understands their specific needs.</p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="author-info">
+                                    <h4>Robert Martinez</h4>
+                                    <p class="author-pet">Luna & Leo, Maine Coons</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p class="testimonial-text">As a first-time pet parent, I was nervous about boarding, but PetPals staff was patient and accommodating. They followed all my puppy's routines perfectly.</p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="author-info">
+                                    <h4>Sarah Johnson</h4>
+                                    <p class="author-pet">Bella, Labrador Puppy</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="boarding-staff">
+            <div class="container">
+                <h2 class="section-title">Meet Our Boarding Staff</h2>
+                <div class="staff-grid">
+                    <div class="staff-card">
+                        <div class="staff-image">
+                            <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="200" height="200" fill="#F0F0F0"/>
+                                <circle cx="100" cy="70" r="40" fill="#A0A0A0"/>
+                                <path d="M60 180C60 140 80 130 100 130C120 130 140 140 140 180" fill="#A0A0A0"/>
+                                <circle cx="85" cy="65" r="5" fill="white"/>
+                                <circle cx="115" cy="65" r="5" fill="white"/>
+                                <path d="M90 80C90 80 95 85 100 85C105 85 110 80 110 80" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                <rect x="85" y="120" width="30" height="40" fill="white"/>
+                                <path d="M70 100C70 100 80 90 100 90C120 90 130 100 130 100" stroke="#A0A0A0" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="staff-details">
+                            <h3 class="staff-name">Jessica Williams</h3>
+                            <p class="staff-position">Boarding Manager</p>
+                            <p class="staff-bio">With over 8 years of experience in pet care, Jessica oversees all boarding operations and ensures every pet receives exceptional care.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="staff-card">
+                        <div class="staff-image">
+                            <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="200" height="200" fill="#F0F0F0"/>
+                                <circle cx="100" cy="70" r="40" fill="#A0A0A0"/>
+                                <path d="M60 180C60 140 80 130 100 130C120 130 140 140 140 180" fill="#A0A0A0"/>
+                                <circle cx="85" cy="65" r="5" fill="white"/>
+                                <circle cx="115" cy="65" r="5" fill="white"/>
+                                <path d="M90 80C90 80 95 85 100 85C105 85 110 80 110 80" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                <rect x="85" y="120" width="30" height="40" fill="white"/>
+                                <path d="M80 60C80 60 90 50 100 50C110 50 120 60 120 60" stroke="#A0A0A0" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="staff-details">
+                            <h3 class="staff-name">Daniel Garcia</h3>
+                            <p class="staff-position">Pet Care Specialist</p>
+                            <p class="staff-bio">Daniel is a certified pet trainer who helps keep our boarders active and engaged with enrichment activities and playtime.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="staff-card">
+                        <div class="staff-image">
+                            <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="200" height="200" fill="#F0F0F0"/>
+                                <circle cx="100" cy="70" r="40" fill="#A0A0A0"/>
+                                <path d="M60 180C60 140 80 130 100 130C120 130 140 140 140 180" fill="#A0A0A0"/>
+                                <circle cx="85" cy="65" r="5" fill="white"/>
+                                <circle cx="115" cy="65" r="5" fill="white"/>
+                                <path d="M90 80C90 80 95 85 100 85C105 85 110 80 110 80" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                <rect x="85" y="120" width="30" height="40" fill="white"/>
+                                <path d="M75 45C75 45 90 35 100 35C110 35 125 45 125 45" stroke="#A0A0A0" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="staff-details">
+                            <h3 class="staff-name">Olivia Chen</h3>
+                            <p class="staff-position">Overnight Supervisor</p>
+                            <p class="staff-bio">Olivia ensures pets are comfortable through the night, administers any required medications, and provides late-night care.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="booking-section" id="booking">
+            <div class="container">
+                <div class="booking-container">
+                    <div class="booking-info">
+                        <h2>Book Your Pet's Stay</h2>
+                        <div class="booking-steps">
+                            <div class="booking-step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h3>Check Availability</h3>
+                                    <p>Select your drop-off and pick-up dates to check for available accommodations for your pet.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="booking-step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h3>Provide Pet Details</h3>
+                                    <p>Tell us about your pet's needs, preferences, diet, and any special requirements during their stay.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="booking-step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h3>Confirm Booking</h3>
+                                    <p>Review your booking details, accept our boarding policies, and secure your reservation with a deposit.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p>Need assistance with your booking? Call us at <strong>(555) 123-4567</strong> or email <strong>boarding@petpals.com</strong></p>
+                    </div>
+                    
+                    <div class="booking-form">
+                        <form id="boarding-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="dropoff-date">Drop-off Date</label>
+                                    <input type="date" id="dropoff-date" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pickup-date">Pick-up Date</label>
+                                    <input type="date" id="pickup-date" class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="pet-type">Pet Type</label>
+                                <select id="pet-type" class="form-control" required>
+                                    <option value="">Select Pet Type</option>
+                                    <option value="dog">Dog</option>
+                                    <option value="cat">Cat</option>
+                                    <option value="small-pet">Small Pet</option>
+                                    <option value="bird">Bird</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="pet-name">Pet's Name</label>
+                                    <input type="text" id="pet-name" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pet-breed">Pet's Breed</label>
+                                    <input type="text" id="pet-breed" class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="accommodation">Accommodation Type</label>
+                                <select id="accommodation" class="form-control" required>
+                                    <option value="">Select Accommodation</option>
+                                    <option value="standard-dog">Standard Dog Boarding</option>
+                                    <option value="luxury-dog">Luxury Dog Suite</option>
+                                    <option value="standard-cat">Cat Boarding</option>
+                                    <option value="luxury-cat">Luxury Cat Suite</option>
+                                    <option value="small-pet">Small Pet Boarding</option>
+                                    <option value="bird">Bird Boarding</option>
+                                    <option value="extended">Extended Stay Package</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="special-instructions">Special Instructions</label>
+                                <textarea id="special-instructions" class="form-control" rows="4" placeholder="Please include any dietary needs, medications, or special care instructions"></textarea>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="owner-name">Your Name</label>
+                                    <input type="text" id="owner-name" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contact-number">Contact Number</label>
+                                    <input type="tel" id="contact-number" class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="owner-email">Email Address</label>
+                                <input type="email" id="owner-email" class="form-control" required>
+                            </div>
+                            
+                            <button type="submit" class="btn primary-btn" style="width: 100%;">Book Now</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="boarding-policies">
+            <div class="container">
+                <h2 class="section-title">Our Boarding Policies</h2>
+                <div class="policies-grid">
+                    <div class="policy-card">
+                        <div class="policy-icon">
+                            <i class="fas fa-syringe"></i>
+                        </div>
+                        <h3 class="policy-title">Vaccination Requirements</h3>
+                        <p class="policy-description">All pets must be up-to-date on vaccinations. Proof of vaccination is required at check-in to ensure the health and safety of all our guests.</p>
+                    </div>
+                    
+                    <div class="policy-card">
+                        <div class="policy-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3 class="policy-title">Check-In/Check-Out Times</h3>
+                        <p class="policy-description">Check-in is between 8am-11am and check-out is between 3pm-6pm. Early drop-off or late pick-up can be arranged for an additional fee.</p>
+                    </div>
+                    
+                    <div class="policy-card">
+                        <div class="policy-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <h3 class="policy-title">Food & Medications</h3>
+                        <p class="policy-description">Please bring your pet's food and any medications with clear instructions. We follow their regular routine to minimize stress.</p>
+                    </div>
+                    
+                    <div class="policy-card">
+                        <div class="policy-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3 class="policy-title">Reservation & Cancellation</h3>
+                        <p class="policy-description">A 50% deposit is required to secure your booking. Cancellations made within 48 hours of check-in may incur a cancellation fee.</p>
+                    </div>
+                    
+                    <div class="policy-card">
+                        <div class="policy-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3 class="policy-title">Personal Items</h3>
+                        <p class="policy-description">We encourage bringing a favorite toy or blanket to help your pet feel more comfortable during their stay with us.</p>
+                    </div>
+                    
+                    <div class="policy-card">
+                        <div class="policy-icon">
+                            <i class="fas fa-paw"></i>
+                        </div>
+                        <h3 class="policy-title">Behavior Assessment</h3>
+                        <p class="policy-description">First-time boarders may undergo a brief behavior assessment to ensure we can provide the best care and appropriate playgroup placement.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <a href="../index.html" class="footer-logo">
+                        <svg width="150" height="50" viewBox="0 0 150 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M25 10C27.7614 10 30 12.2386 30 15C30 17.7614 27.7614 20 25 20C22.2386 20 20 17.7614 20 15C20 12.2386 22.2386 10 25 10Z" fill="#FFFFFF"/>
+                            <path d="M35 25C37.7614 25 40 27.2386 40 30C40 32.7614 37.7614 35 35 35C32.2386 35 30 32.7614 30 30C30 27.2386 32.2386 25 35 25Z" fill="#FFFFFF"/>
+                            <path d="M15 25C17.7614 25 20 27.2386 20 30C20 32.7614 17.7614 35 15 35C12.2386 35 10 32.7614 10 30C10 27.2386 12.2386 25 15 25Z" fill="#FFFFFF"/>
+                            <path d="M20 40C22.7614 40 25 42.2386 25 45C25 47.7614 22.7614 50 20 50C17.2386 50 15 47.7614 15 45C15 42.2386 17.2386 40 20 40Z" fill="#FFFFFF"/>
+                            <path d="M30 40C32.7614 40 35 42.2386 35 45C35 47.7614 32.7614 50 30 50C27.2386 50 25 47.7614 25 45C25 42.2386 27.2386 40 30 40Z" fill="#FFFFFF"/>
+                            <text x="55" y="35" font-family="Poppins" font-size="24" font-weight="bold" fill="#FFFFFF">PetPals</text>
+                        </svg>
+                    </a>
+                    <p>Your one-stop destination for all pet services - because your pets deserve the best!</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="buy-sell.html">Buy/Sell Pets</a></li>
+                        <li><a href="shop.html">Pet Shop</a></li>
+                        <li><a href="medical.html">Medical Care</a></li>
+                        <li><a href="boarding.html">Pet Boarding</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Help & Support</h3>
+                    <ul>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Pet Street, Animal City</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> support@petpals.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 PetPals. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="scroll-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/products.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const boardingOptionsGrid = document.getElementById('boarding-options-grid');
+            const boardingForm = document.getElementById('boarding-form');
+            
+            // Render boarding options
+            renderBoardingOptions();
+            
+            // Booking form submission
+            boardingForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleBookingSubmission();
+            });
+            
+            // Function to render boarding options
+            function renderBoardingOptions() {
+                boardingOptionsGrid.innerHTML = '';
+                
+                boardingServices.forEach(service => {
+                    const optionCard = document.createElement('div');
+                    optionCard.className = 'option-card';
+                    
+                    // Generate SVG for option image
+                    const optionSvg = generateBoardingSVG(service.id, service.petType);
+                    
+                    optionCard.innerHTML = `
+                        <div class="option-image">
+                            ${optionSvg}
+                        </div>
+                        <div class="option-details">
+                            <h3 class="option-name">${service.name}</h3>
+                            <p class="option-price">$${service.price.toFixed(2)} <span style="font-size: 0.8rem; font-weight: normal;">${service.priceType}</span></p>
+                            <span class="pet-type-badge">${service.petType === 'Both' ? 'Dogs & Cats' : service.petType}</span>
+                            <p class="option-description">${service.description}</p>
+                            <div class="option-features">
+                                ${service.features.map(feature => `
+                                    <div class="feature-item">
+                                        <i class="fas fa-check"></i>
+                                        <span>${feature}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <a href="#booking" class="btn-text book-option-btn" data-id="${service.id}">Book Now <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    `;
+                    
+                    boardingOptionsGrid.appendChild(optionCard);
+                    
+                    // Add event listener to book now button
+                    const bookBtn = optionCard.querySelector('.book-option-btn');
+                    bookBtn.addEventListener('click', function() {
+                        const serviceId = this.dataset.id;
+                        document.getElementById('accommodation').value = serviceId.replace('board-', '');
+                        document.getElementById('dropoff-date').focus();
+                    });
+                });
+            }
+            
+            // Function to generate SVG for boarding option
+            function generateBoardingSVG(serviceId, petType) {
+                // Base SVG with background
+                let svg = `
+                    <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                `;
+                
+                // Add background and basic elements based on pet type
+                if (petType === 'Dog' || petType === 'Both') {
+                    // Dog boarding
+                    svg += `
+                        <rect width="200" height="200" fill="#F8F8F8"/>
+                        <rect x="40" y="60" width="120" height="80" rx="5" fill="#FFD166" opacity="0.7"/>
+                        <rect x="50" y="70" width="100" height="60" rx="3" fill="#FFFFFF"/>
+                        <circle cx="100" cy="90" r="15" fill="#FFD166"/>
+                        <path d="M80 150C80 150 90 130 100 130C110 130 120 150 120 150" stroke="#FFD166" stroke-width="2"/>
+                        <path d="M70 90L80 80M130 90L120 80" stroke="#FFD166" stroke-width="2"/>
+                        <circle cx="95" cy="85" r="3" fill="#333333"/>
+                        <circle cx="105" cy="85" r="3" fill="#333333"/>
+                        <path d="M95 95C95 95 98 97 100 97C102 97 105 95 105 95" stroke="#333333" stroke-width="1.5" stroke-linecap="round"/>
+                    `;
+                } else if (petType === 'Cat') {
+                    // Cat boarding
+                    svg += `
+                        <rect width="200" height="200" fill="#F8F8F8"/>
+                        <rect x="40" y="60" width="120" height="80" rx="5" fill="#A1E8E4" opacity="0.7"/>
+                        <rect x="50" y="70" width="100" height="60" rx="3" fill="#FFFFFF"/>
+                        <circle cx="100" cy="90" r="15" fill="#A1E8E4"/>
+                        <path d="M80 150C80 150 90 130 100 130C110 130 120 150 120 150" stroke="#A1E8E4" stroke-width="2"/>
+                        <path d="M85 80L95 70" stroke="#A1E8E4" stroke-width="2"/>
+                        <path d="M115 80L105 70" stroke="#A1E8E4" stroke-width="2"/>
+                        <circle cx="95" cy="85" r="3" fill="#333333"/>
+                        <circle cx="105" cy="85" r="3" fill="#333333"/>
+                        <path d="M95 95C95 95 98 97 100 97C102 97 105 95 105 95" stroke="#333333" stroke-width="1.5" stroke-linecap="round"/>
+                    `;
+                } else if (petType === 'Small Pet') {
+                    // Small pet boarding
+                    svg += `
+                        <rect width="200" height="200" fill="#F8F8F8"/>
+                        <rect x="40" y="60" width="120" height="80" rx="5" fill="#BDB2FF" opacity="0.7"/>
+                        <rect x="50" y="70" width="100" height="60" rx="3" fill="#FFFFFF"/>
+                        <circle cx="100" cy="100" r="15" fill="#BDB2FF"/>
+                        <circle cx="95" cy="95" r="3" fill="#333333"/>
+                        <circle cx="105" cy="95" r="3" fill="#333333"/>
+                        <path d="M95 105C95 105 98 107 100 107C102 107 105 105 105 105" stroke="#333333" stroke-width="1.5" stroke-linecap="round"/>
+                        <path d="M90 85L100 80L110 85" stroke="#BDB2FF" stroke-width="2"/>
+                    `;
+                } else if (petType === 'Bird') {
+                    // Bird boarding
+                    svg += `
+                        <rect width="200" height="200" fill="#F8F8F8"/>
+                        <rect x="40" y="60" width="120" height="80" rx="5" fill="#CAFFBF" opacity="0.7"/>
+                        <rect x="50" y="70" width="100" height="60" rx="3" fill="#FFFFFF"/>
+                        <circle cx="100" cy="90" r="15" fill="#CAFFBF"/>
+                        <path d="M90 85L100 75L110 85" stroke="#CAFFBF" stroke-width="2"/>
+                        <circle cx="100" cy="85" r="3" fill="#333333"/>
+                        <path d="M95 95L105 95" stroke="#333333" stroke-width="1.5" stroke-linecap="round"/>
+                    `;
+                } else {
+                    // Default boarding
+                    svg += `
+                        <rect width="200" height="200" fill="#F8F8F8"/>
+                        <rect x="40" y="60" width="120" height="80" rx="5" fill="#FF9A8B" opacity="0.7"/>
+                        <rect x="50" y="70" width="100" height="60" rx="3" fill="#FFFFFF"/>
+                    `;
+                }
+                
+                // Add specific elements based on service type
+                switch (serviceId) {
+                    case 'board-1': // Standard Dog Boarding
+                        svg += `
+                            <rect x="60" y="110" width="80" height="10" rx="2" fill="#F0F0F0"/>
+                            <path d="M70 60V40" stroke="#FFD166" stroke-width="2"/>
+                            <path d="M100 60V40" stroke="#FFD166" stroke-width="2"/>
+                            <path d="M130 60V40" stroke="#FFD166" stroke-width="2"/>
+                        `;
+                        break;
+                    case 'board-2': // Luxury Dog Suite
+                        svg += `
+                            <rect x="60" y="110" width="80" height="10" rx="5" fill="#FFD166"/>
+                            <rect x="70" y="45" width="60" height="15" rx="5" fill="#FFD166"/>
+                            <rect x="65" y="130" width="70" height="10" rx="5" fill="#F0F0F0"/>
+                            <path d="M170 75L180 85L190 65" stroke="#FFD166" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        `;
+                        break;
+                    case 'board-3': // Cat Boarding
+                        svg += `
+                            <rect x="60" y="110" width="80" height="10" rx="2" fill="#F0F0F0"/>
+                            <path d="M60 80H80" stroke="#A1E8E4" stroke-width="2"/>
+                            <path d="M120 80H140" stroke="#A1E8E4" stroke-width="2"/>
+                            <path d="M75 70L75 90" stroke="#A1E8E4" stroke-width="2"/>
+                            <path d="M125 70L125 90" stroke="#A1E8E4" stroke-width="2"/>
+                        `;
+                        break;
+                    case 'board-4': // Luxury Cat Suite
+                        svg += `
+                            <rect x="60" y="110" width="80" height="10" rx="5" fill="#A1E8E4"/>
+                            <rect x="70" y="45" width="60" height="15" rx="5" fill="#A1E8E4"/>
+                            <rect x="65" y="130" width="70" height="10" rx="5" fill="#F0F0F0"/>
+                            <path d="M170 75L180 85L190 65" stroke="#A1E8E4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        `;
+                        break;
+                    case 'board-5': // Small Pet Boarding
+                        svg += `
+                            <rect x="70" y="110" width="60" height="10" rx="2" fill="#F0F0F0"/>
+                            <circle cx="75" cy="75" r="5" fill="#BDB2FF"/>
+                            <circle cx="125" cy="75" r="5" fill="#BDB2FF"/>
+                            <path d="M70 90H130" stroke="#BDB2FF" stroke-width="1" stroke-dasharray="4 4"/>
+                        `;
+                        break;
+                    case 'board-6': // Bird Boarding
+                        svg += `
+                            <rect x="70" y="110" width="60" height="10" rx="2" fill="#F0F0F0"/>
+                            <path d="M70 70L130 70" stroke="#CAFFBF" stroke-width="1"/>
+                            <path d="M70 80L130 80" stroke="#CAFFBF" stroke-width="1"/>
+                            <path d="M70 90L130 90" stroke="#CAFFBF" stroke-width="1"/>
+                            <path d="M70 100L130 100" stroke="#CAFFBF" stroke-width="1"/>
+                        `;
+                        break;
+                    case 'board-7': // Daycare Only
+                        svg += `
+                            <circle cx="70" cy="100" r="10" fill="#FFD166" opacity="0.7"/>
+                            <circle cx="100" cy="110" r="10" fill="#FFD166" opacity="0.7"/>
+                            <circle cx="130" cy="100" r="10" fill="#FFD166" opacity="0.7"/>
+                            <path d="M40 130H160" stroke="#F0F0F0" stroke-width="2"/>
+                            <path d="M60 50L50 40M140 50L150 40" stroke="#FFD166" stroke-width="2" stroke-linecap="round"/>
+                        `;
+                        break;
+                    case 'board-8': // Extended Stay
+                        svg += `
+                            <rect x="60" y="110" width="80" height="10" rx="5" fill="#FF9A8B"/>
+                            <circle cx="70" cy="140" r="5" fill="#FF9A8B"/>
+                            <circle cx="90" cy="140" r="5" fill="#FF9A8B"/>
+                            <circle cx="110" cy="140" r="5" fill="#FF9A8B"/>
+                            <circle cx="130" cy="140" r="5" fill="#FF9A8B"/>
+                            <path d="M40 40H160" stroke="#FF9A8B" stroke-width="2" stroke-dasharray="5 5"/>
+                            <path d="M170 85L180 95L190 75" stroke="#FF9A8B" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        `;
+                        break;
+                }
+                
+                // Close SVG
+                svg += '</svg>';
+                
+                return svg;
+            }
+            
+            // Function to handle booking submission
+            function handleBookingSubmission() {
+                const dropoffDate = document.getElementById('dropoff-date').value;
+                const pickupDate = document.getElementById('pickup-date').value;
+                const petType = document.getElementById('pet-type').value;
+                const petName = document.getElementById('pet-name').value;
+                const petBreed = document.getElementById('pet-breed').value;
+                const accommodation = document.getElementById('accommodation').value;
+                const specialInstructions = document.getElementById('special-instructions').value;
+                const ownerName = document.getElementById('owner-name').value;
+                const contactNumber = document.getElementById('contact-number').value;
+                const ownerEmail = document.getElementById('owner-email').value;
+                
+                // In a real application, this would send data to a server
+                // For this demo, we'll just show a success message
+                
+                // Create notification
+                showNotification(`Boarding reservation for ${petName} confirmed!`, 'success');
+                
+                // Reset form
+                boardingForm.reset();
+            }
+            
+            // Function to show notification
+            function showNotification(message, type) {
+                // Create notification element if it doesn't exist
+                let notification = document.querySelector('.notification-container');
+                
+                if (!notification) {
+                    notification = document.createElement('div');
+                    notification.className = 'notification-container';
+                    document.body.appendChild(notification);
+                    
+                    // Style the notification container
+                    notification.style.position = 'fixed';
+                    notification.style.top = '20px';
+                    notification.style.right = '20px';
+                    notification.style.zIndex = '1000';
+                }
+                
+                // Create notification element
+                const notificationEl = document.createElement('div');
+                notificationEl.className = `notification ${type}`;
+                
+                // Set notification content
+                notificationEl.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 10px; background-color: ${type === 'success' ? 'var(--accent-green)' : 'var(--primary-color)'}; color: white; padding: 15px 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-md); margin-bottom: 10px;">
+                        <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}" style="font-size: 1.2rem;"></i>
+                        <div>${message}</div>
+                    </div>
+                `;
+                
+                // Add notification to container
+                notification.appendChild(notificationEl);
+                
+                // Remove notification after 3 seconds
+                setTimeout(() => {
+                    notification.removeChild(notificationEl);
+                    
+                    // Remove container if empty
+                    if (notification.children.length === 0) {
+                        document.body.removeChild(notification);
+                    }
+                }, 3000);
+            }
+            
+            // Initialize date input min values
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('dropoff-date').min = today;
+            document.getElementById('pickup-date').min = today;
+            
+            // Ensure pickup date is after dropoff date
+            document.getElementById('dropoff-date').addEventListener('change', function() {
+                const dropoffDate = this.value;
+                document.getElementById('pickup-date').min = dropoffDate;
+                
+                // If pickup date is before new dropoff date, reset it
+                if (document.getElementById('pickup-date').value < dropoffDate) {
+                    document.getElementById('pickup-date').value = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PetPals - Professional veterinary and medical care services for your beloved pets">
+    <title>Medical Care - PetPals</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Page-specific styles */
+        .medical-header {
+            background-color: var(--primary-light);
+            padding: var(--spacing-3xl) 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .medical-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 25C53 25 55 27 55 30C55 33 53 35 50 35C47 35 45 33 45 30C45 27 47 25 50 25Z' fill='white' fill-opacity='0.1'/%3E%3Cpath d='M70 40C73 40 75 42 75 45C75 48 73 50 70 50C67 50 65 48 65 45C65 42 67 40 70 40Z' fill='white' fill-opacity='0.1'/%3E%3Cpath d='M30 40C33 40 35 42 35 45C35 48 33 50 30 50C27 50 25 48 25 45C25 42 27 40 30 40Z' fill='white' fill-opacity='0.1'/%3E%3Cpath d='M60 60C63 60 65 62 65 65C65 68 63 70 60 70C57 70 55 68 55 65C55 62 57 60 60 60Z' fill='white' fill-opacity='0.1'/%3E%3Cpath d='M40 60C43 60 45 62 45 65C45 68 43 70 40 70C37 70 35 68 35 65C35 62 37 60 40 60Z' fill='white' fill-opacity='0.1'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            opacity: 0.5;
+        }
+        
+        .medical-header .container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        
+        .medical-header h1 {
+            color: var(--dark);
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-3xl);
+        }
+        
+        .medical-header p {
+            color: var(--dark-gray);
+            max-width: 800px;
+            margin: 0 auto var(--spacing-lg);
+            font-size: var(--font-lg);
+            line-height: 1.6;
+        }
+        
+        .services-section {
+            padding: var(--spacing-3xl) 0;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .service-card {
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .service-image {
+            height: 200px;
+            background-color: var(--off-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-details {
+            padding: var(--spacing-lg);
+        }
+        
+        .service-name {
+            font-size: var(--font-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--dark);
+        }
+        
+        .service-price {
+            font-size: var(--font-md);
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .service-description {
+            color: var(--dark-gray);
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-sm);
+            line-height: 1.6;
+        }
+        
+        .service-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            font-size: var(--font-sm);
+            color: var(--medium-gray);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .service-meta i {
+            color: var(--primary-color);
+        }
+        
+        .service-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .service-pets {
+            display: flex;
+            gap: var(--spacing-xs);
+        }
+        
+        .pet-icon {
+            width: 24px;
+            height: 24px;
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-xs);
+        }
+        
+        .vet-team {
+            padding: var(--spacing-3xl) 0;
+            background-color: var(--off-white);
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .team-member {
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            text-align: center;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .member-image {
+            height: 200px;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .member-details {
+            padding: var(--spacing-lg);
+        }
+        
+        .member-name {
+            font-size: var(--font-md);
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+            color: var(--dark);
+        }
+        
+        .member-role {
+            font-size: var(--font-sm);
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .member-bio {
+            font-size: var(--font-sm);
+            color: var(--dark-gray);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.6;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .social-link {
+            width: 32px;
+            height: 32px;
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+        }
+        
+        .social-link:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+        
+        .facilities {
+            padding: var(--spacing-3xl) 0;
+        }
+        
+        .facilities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .facility-card {
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            display: flex;
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+        }
+        
+        .facility-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .facility-image {
+            flex: 0 0 200px;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .facility-details {
+            flex: 1;
+            padding: var(--spacing-lg);
+        }
+        
+        .facility-name {
+            font-size: var(--font-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--dark);
+        }
+        
+        .facility-description {
+            font-size: var(--font-sm);
+            color: var(--dark-gray);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.6;
+        }
+        
+        .facility-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .facility-feature {
+            font-size: var(--font-xs);
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .facility-feature i {
+            color: var(--primary-color);
+        }
+        
+        .booking-section {
+            padding: var(--spacing-3xl) 0;
+            background-color: var(--primary-light);
+            text-align: center;
+        }
+        
+        .booking-form {
+            max-width: 600px;
+            margin: var(--spacing-xl) auto 0;
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-xl);
+        }
+        
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: var(--spacing-xs);
+            font-weight: 500;
+            color: var(--dark);
+            text-align: left;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: var(--font-base);
+            color: var(--dark);
+        }
+        
+        .form-row {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .emergency-cta {
+            background-color: var(--accent-green);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            margin-top: var(--spacing-3xl);
+        }
+        
+        .emergency-cta h3 {
+            color: var(--dark);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .emergency-phone {
+            font-size: var(--font-xl);
+            font-weight: 700;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .emergency-phone i {
+            color: var(--primary-color);
+        }
+        
+        @media screen and (max-width: 992px) {
+            .services-grid, .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .facilities-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .facility-card {
+                flex-direction: column;
+            }
+            
+            .facility-image {
+                flex: 0 0 200px;
+                width: 100%;
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .medical-header h1 {
+                font-size: var(--font-2xl);
+            }
+            
+            .medical-header p {
+                font-size: var(--font-base);
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+        
+        @media screen and (max-width: 576px) {
+            .services-grid, .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="../index.html" class="logo">
+                    <svg width="150" height="50" viewBox="0 0 150 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M25 10C27.7614 10 30 12.2386 30 15C30 17.7614 27.7614 20 25 20C22.2386 20 20 17.7614 20 15C20 12.2386 22.2386 10 25 10Z" fill="#FF6B6B"/>
+                        <path d="M35 25C37.7614 25 40 27.2386 40 30C40 32.7614 37.7614 35 35 35C32.2386 35 30 32.7614 30 30C30 27.2386 32.2386 25 35 25Z" fill="#FF6B6B"/>
+                        <path d="M15 25C17.7614 25 20 27.2386 20 30C20 32.7614 17.7614 35 15 35C12.2386 35 10 32.7614 10 30C10 27.2386 12.2386 25 15 25Z" fill="#FF6B6B"/>
+                        <path d="M20 40C22.7614 40 25 42.2386 25 45C25 47.7614 22.7614 50 20 50C17.2386 50 15 47.7614 15 45C15 42.2386 17.2386 40 20 40Z" fill="#FF6B6B"/>
+                        <path d="M30 40C32.7614 40 35 42.2386 35 45C35 47.7614 32.7614 50 30 50C27.2386 50 25 47.7614 25 45C25 42.2386 27.2386 40 30 40Z" fill="#FF6B6B"/>
+                        <text x="55" y="35" font-family="Poppins" font-size="24" font-weight="bold" fill="#4D4D4D">PetPals</text>
+                    </svg>
+                </a>
+                
+                <nav class="desktop-nav">
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="buy-sell.html">Buy/Sell Pets</a></li>
+                        <li><a href="shop.html">Pet Shop</a></li>
+                        <li><a href="medical.html" class="active">Medical Care</a></li>
+                        <li><a href="boarding.html">Pet Boarding</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="header-right">
+                    <a href="shop.html#cart" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                    <div class="mobile-menu-btn">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-menu">
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="buy-sell.html">Buy/Sell Pets</a></li>
+            <li><a href="shop.html">Pet Shop</a></li>
+            <li><a href="medical.html" class="active">Medical Care</a></li>
+            <li><a href="boarding.html">Pet Boarding</a></li>
+        </ul>
+    </div>
+
+    <main>
+        <section class="medical-header">
+            <div class="container">
+                <h1>Expert Veterinary & Medical Care</h1>
+                <p>Your pet's health is our top priority. Our team of experienced veterinarians provides comprehensive medical care, from routine check-ups to specialized treatments, ensuring your furry friend stays happy and healthy.</p>
+                <a href="#booking" class="btn primary-btn">Book An Appointment</a>
+            </div>
+        </section>
+
+        <section class="services-section">
+            <div class="container">
+                <h2 class="section-title">Our Medical Services</h2>
+                <div class="services-grid" id="services-grid">
+                    <!-- Services will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <section class="vet-team">
+            <div class="container">
+                <h2 class="section-title">Meet Our Veterinary Team</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-image">
+                            <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="200" height="200" fill="#F0F0F0"/>
+                                <circle cx="100" cy="70" r="40" fill="#A0A0A0"/>
+                                <path d="M60 180C60 140 80 130 100 130C120 130 140 140 140 180" fill="#A0A0A0"/>
+                                <circle cx="85" cy="65" r="5" fill="white"/>
+                                <circle cx="115" cy="65" r="5" fill="white"/>
+                                <path d="M90 80C90 80 95 85 100 85C105 85 110 80 110 80" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                <rect x="85" y="120" width="30" height="40" fill="white"/>
+                                <path d="M90 120V110H110V120" stroke="#A0A0A0" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="member-details">
+                            <h3 class="member-name">Dr. Sarah Johnson</h3>
+                            <p class="member-role">Chief Veterinarian</p>
+                            <p class="member-bio">Dr. Johnson has over 15 years of experience in veterinary medicine with a special interest in preventive care and surgery.</p>
+                            <div class="social-links">
+                                <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-image">
+                            <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="200" height="200" fill="#F0F0F0"/>
+                                <circle cx="100" cy="70" r="40" fill="#A0A0A0"/>
+                                <path d="M60 180C60 140 80 130 100 130C120 130 140 140 140 180" fill="#A0A0A0"/>
+                                <circle cx="85" cy="65" r="5" fill="white"/>
+                                <circle cx="115" cy="65" r="5" fill="white"/>
+                                <path d="M90 80C90 80 95 85 100 85C105 85 110 80 110 80" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                <rect x="85" y="120" width="30" height="40" fill="white"/>
+                                <path d="M70 100C70 100 80 90 100 90C120 90 130 100 130 100" stroke="#A0A0A0" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="member-details">
+                            <h3 class="member-name">Dr. Michael Chen</h3>
+                            <p class="member-role">Veterinary Surgeon</p>
+                            <p class="member-bio">Dr. Chen specializes in complex surgical procedures and orthopedic surgeries for pets of all sizes.</p>
+                            <div class="social-links">
+                                <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-image">
+                            <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="200" height="200" fill="#F0F0F0"/>
+                                <circle cx="100" cy="70" r="40" fill="#A0A0A0"/>
+                                <path d="M60 180C60 140 80 130 100 130C120 130 140 140 140 180" fill="#A0A0A0"/>
+                                <circle cx="85" cy="65" r="5" fill="white"/>
+                                <circle cx="115" cy="65" r="5" fill="white"/>
+                                <path d="M90 80C90 80 95 85 100 85C105 85 110 80 110 80" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                <rect x="85" y="120" width="30" height="40" fill="white"/>
+                                <path d="M80 60C80 60 90 50 100 50C110 50 120 60 120 60" stroke="#A0A0A0" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="member-details">
+                            <h3 class="member-name">Dr. Emily Rodriguez</h3>
+                            <p class="member-role">Veterinary Dentist</p>
+                            <p class="member-bio">Dr. Rodriguez focuses on dental health and oral surgeries, helping pets maintain healthy teeth and gums.</p>
+                            <div class="social-links">
+                                <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-image">
+                            <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="200" height="200" fill="#F0F0F0"/>
+                                <circle cx="100" cy="70" r="40" fill="#A0A0A0"/>
+                                <path d="M60 180C60 140 80 130 100 130C120 130 140 140 140 180" fill="#A0A0A0"/>
+                                <circle cx="85" cy="65" r="5" fill="white"/>
+                                <circle cx="115" cy="65" r="5" fill="white"/>
+                                <path d="M90 80C90 80 95 85 100 85C105 85 110 80 110 80" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                <rect x="85" y="120" width="30" height="40" fill="white"/>
+                                <path d="M75 45C75 45 90 35 100 35C110 35 125 45 125 45" stroke="#A0A0A0" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="member-details">
+                            <h3 class="member-name">Dr. James Wilson</h3>
+                            <p class="member-role">Dermatology Specialist</p>
+                            <p class="member-bio">Dr. Wilson specializes in pet dermatology, diagnosing and treating various skin conditions and allergies.</p>
+                            <div class="social-links">
+                                <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="facilities">
+            <div class="container">
+                <h2 class="section-title">Our Medical Facilities</h2>
+                <div class="facilities-grid">
+                    <div class="facility-card">
+                        <div class="facility-image">
+                            <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="200" height="200" fill="#F0F0F0"/>
+                                <rect x="40" y="60" width="120" height="80" rx="5" fill="#FFFFFF"/>
+                                <rect x="50" y="70" width="100" height="60" rx="3" fill="#E0E0E0"/>
+                                <circle cx="100" cy="100" r="20" fill="#FFFFFF"/>
+                                <path d="M90 100H110M100 90V110" stroke="#FF6B6B" stroke-width="4" stroke-linecap="round"/>
+                                <rect x="60" y="150" width="80" height="10" rx="2" fill="#FFFFFF"/>
+                                <rect x="70" y="50" width="60" height="10" rx="2" fill="#FFFFFF"/>
+                            </svg>
+                        </div>
+                        <div class="facility-details">
+                            <h3 class="facility-name">State-of-the-Art Surgery Suite</h3>
+                            <p class="facility-description">Our modern surgical facility is equipped with advanced monitoring equipment and surgical tools to ensure safe and effective procedures for your pets.</p>
+                            <div class="facility-features">
+                                <span class="facility-feature"><i class="fas fa-check-circle"></i> Advanced monitoring</span>
+                                <span class="facility-feature"><i class="fas fa-check-circle"></i> Heated surgery tables</span>
+                                <span class="facility-feature"><i class="fas fa-check-circle"></i> Anesthesia stations</span>
+                                <span class="facility-feature"><i class="fas fa-check-circle"></i> Recovery area</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="facility-card">
+                        <div class="facility-image">
+                            <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="200" height="200" fill="#F0F0F0"/>
+                                <rect x="50" y="50" width="100" height="100" rx="5" fill="#FFFFFF"/>
+                                <circle cx="100" cy="75" r="15" fill="#E0E0E0"/>
+                                <rect x="70" y="100" width="60" height="5" rx="2.5" fill="#E0E0E0"/>
+                                <rect x="70" y="110" width="60" height="5" rx="2.5" fill="#E0E0E0"/>
+                                <rect x="70" y="120" width="60" height="5" rx="2.5" fill="#E0E0E0"/>
+                                <rect x="70" y="130" width="40" height="5" rx="2.5" fill="#E0E0E0"/>
+                                <path d="M120 135L130 145L150 125" stroke="#4ECDC4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="facility-details">
+                            <h3 class="facility-name">Diagnostic Imaging Center</h3>
+                            <p class="facility-description">Our diagnostic imaging center includes digital X-ray, ultrasound, and other advanced imaging technologies to provide accurate diagnoses.</p>
+                            <div class="facility-features">
+                                <span class="facility-feature"><i class="fas fa-check-circle"></i> Digital X-ray</span>
+                                <span class="facility-feature"><i class="fas fa-check-circle"></i> Ultrasound</span>
+                                <span class="facility-feature"><i class="fas fa-check-circle"></i> Dental radiography</span>
+                                <span class="facility-feature"><i class="fas fa-check-circle"></i> Quick results</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="facility-card">
+                        <div class="facility-image">
+                            <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="200" height="200" fill="#F0F0F0"/>
+                                <rect x="40" y="60" width="120" height="80" fill="#FFFFFF"/>
+                                <rect x="50" y="70" width="40" height="60" fill="#E0E0E0"/>
+                                <rect x="100" y="70" width="50" height="30" fill="#E0E0E0"/>
+                                <rect x="100" y="110" width="50" height="20" fill="#E0E0E0"/>
+                                <circle cx="60" cy="140" r="10" fill="#FF6B6B"/>
+                                <circle cx="90" cy="140" r="10" fill="#4ECDC4"/>
+                                <circle cx="120" cy="140" r="10" fill="#FFD166"/>
+                                <path d="M60 140H150" stroke="#A0A0A0" stroke-width="2" stroke-dasharray="4 4"/>
+                            </svg>
+                        </div>
+                        <div class="facility-details">
+                            <h3 class="facility-name">In-House Laboratory</h3>
+                            <p class="facility-description">Our laboratory enables us to perform a wide range of tests on-site, providing quick results for faster diagnosis and treatment.</p>
+                            <div class="facility-features">
+                                <span class="facility-feature"><i class="fas fa-check-circle"></i> Blood analysis</span>
+                                <span class="facility-feature"><i class="fas fa-check-circle"></i> Urine testing</span>
+                                <span class="facility-feature"><i class="fas fa-check-circle"></i> Parasite testing</span>
+                                <span class="facility-feature"><i class="fas fa-check-circle"></i> Cytology</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="facility-card">
+                        <div class="facility-image">
+                            <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="200" height="200" fill="#F0F0F0"/>
+                                <rect x="50" y="70" width="100" height="80" rx="5" fill="#FFFFFF"/>
+                                <path d="M60 100C60 90 70 80 100 80C130 80 140 90 140 100" stroke="#E0E0E0" stroke-width="2"/>
+                                <circle cx="80" cy="110" r="10" fill="#E0E0E0"/>
+                                <circle cx="120" cy="110" r="10" fill="#E0E0E0"/>
+                                <rect x="70" y="130" width="60" height="10" rx="5" fill="#E0E0E0"/>
+                                <path d="M90 70L100 50L110 70" stroke="#FFD166" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <div class="facility-details">
+                            <h3 class="facility-name">Dental Suite</h3>
+                            <p class="facility-description">Our dedicated dental suite is equipped with dental X-ray and specialized tools for comprehensive oral care and dental procedures.</p>
+                            <div class="facility-features">
+                                <span class="facility-feature"><i class="fas fa-check-circle"></i> Dental X-ray</span>
+                                <span class="facility-feature"><i class="fas fa-check-circle"></i> Scaling equipment</span>
+                                <span class="facility-feature"><i class="fas fa-check-circle"></i> Polishing tools</span>
+                                <span class="facility-feature"><i class="fas fa-check-circle"></i> Extraction tools</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="emergency-cta">
+                    <h3>Pet Emergency? Contact Our 24/7 Emergency Line</h3>
+                    <div class="emergency-phone">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>+1 (555) 911-PETS</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="booking-section" id="booking">
+            <div class="container">
+                <h2 class="section-title">Book An Appointment</h2>
+                <div class="booking-form">
+                    <form id="appointment-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="pet-owner">Your Name</label>
+                                <input type="text" id="pet-owner" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pet-name">Pet's Name</label>
+                                <input type="text" id="pet-name" class="form-control" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="pet-type">Pet Type</label>
+                                <select id="pet-type" class="form-control" required>
+                                    <option value="">Select Pet Type</option>
+                                    <option value="dog">Dog</option>
+                                    <option value="cat">Cat</option>
+                                    <option value="bird">Bird</option>
+                                    <option value="rabbit">Rabbit</option>
+                                    <option value="reptile">Reptile</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="service-type">Service Type</label>
+                                <select id="service-type" class="form-control" required>
+                                    <option value="">Select Service</option>
+                                    <option value="checkup">Routine Check-up</option>
+                                    <option value="vaccination">Vaccination</option>
+                                    <option value="dental">Dental Cleaning</option>
+                                    <option value="surgery">Surgery</option>
+                                    <option value="microchip">Microchipping</option>
+                                    <option value="allergy">Allergy Testing</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="appointment-date">Preferred Date</label>
+                                <input type="date" id="appointment-date" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="appointment-time">Preferred Time</label>
+                                <select id="appointment-time" class="form-control" required>
+                                    <option value="">Select Time</option>
+                                    <option value="morning">Morning (9AM - 12PM)</option>
+                                    <option value="afternoon">Afternoon (1PM - 4PM)</option>
+                                    <option value="evening">Evening (5PM - 7PM)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contact-number">Contact Number</label>
+                            <input type="tel" id="contact-number" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="special-notes">Special Notes or Concerns</label>
+                            <textarea id="special-notes" class="form-control" rows="4"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn primary-btn" style="width: 100%;">Schedule Appointment</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <a href="../index.html" class="footer-logo">
+                        <svg width="150" height="50" viewBox="0 0 150 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M25 10C27.7614 10 30 12.2386 30 15C30 17.7614 27.7614 20 25 20C22.2386 20 20 17.7614 20 15C20 12.2386 22.2386 10 25 10Z" fill="#FFFFFF"/>
+                            <path d="M35 25C37.7614 25 40 27.2386 40 30C40 32.7614 37.7614 35 35 35C32.2386 35 30 32.7614 30 30C30 27.2386 32.2386 25 35 25Z" fill="#FFFFFF"/>
+                            <path d="M15 25C17.7614 25 20 27.2386 20 30C20 32.7614 17.7614 35 15 35C12.2386 35 10 32.7614 10 30C10 27.2386 12.2386 25 15 25Z" fill="#FFFFFF"/>
+                            <path d="M20 40C22.7614 40 25 42.2386 25 45C25 47.7614 22.7614 50 20 50C17.2386 50 15 47.7614 15 45C15 42.2386 17.2386 40 20 40Z" fill="#FFFFFF"/>
+                            <path d="M30 40C32.7614 40 35 42.2386 35 45C35 47.7614 32.7614 50 30 50C27.2386 50 25 47.7614 25 45C25 42.2386 27.2386 40 30 40Z" fill="#FFFFFF"/>
+                            <text x="55" y="35" font-family="Poppins" font-size="24" font-weight="bold" fill="#FFFFFF">PetPals</text>
+                        </svg>
+                    </a>
+                    <p>Your one-stop destination for all pet services - because your pets deserve the best!</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="buy-sell.html">Buy/Sell Pets</a></li>
+                        <li><a href="shop.html">Pet Shop</a></li>
+                        <li><a href="medical.html">Medical Care</a></li>
+                        <li><a href="boarding.html">Pet Boarding</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Help & Support</h3>
+                    <ul>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Return Policy</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Pet Street, Animal City</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> support@petpals.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 PetPals. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="scroll-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/products.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const servicesGrid = document.getElementById('services-grid');
+            const appointmentForm = document.getElementById('appointment-form');
+            
+            // Render medical services
+            renderMedicalServices();
+            
+            // Appointment form submission
+            appointmentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                handleAppointmentSubmission();
+            });
+            
+            // Function to render medical services
+            function renderMedicalServices() {
+                servicesGrid.innerHTML = '';
+                
+                medicalServices.forEach(service => {
+                    const serviceCard = document.createElement('div');
+                    serviceCard.className = 'service-card';
+                    
+                    // Generate random pastel color for service icon background
+                    const hue = Math.floor(Math.random() * 360);
+                    const bgColor = `hsl(${hue}, 70%, 80%)`;
+                    
+                    // Generate SVG for service image
+                    const serviceSvg = generateServiceSVG(service.id, bgColor);
+                    
+                    // Generate pet type icons
+                    const petTypeIcons = generatePetTypeIcons(service.petTypes);
+                    
+                    serviceCard.innerHTML = `
+                        <div class="service-image">
+                            ${serviceSvg}
+                        </div>
+                        <div class="service-details">
+                            <h3 class="service-name">${service.name}</h3>
+                            <p class="service-price">$${service.price.toFixed(2)}</p>
+                            <div class="service-meta">
+                                <span><i class="far fa-clock"></i> ${service.duration}</span>
+                            </div>
+                            <p class="service-description">${service.description}</p>
+                            <div class="service-footer">
+                                <div class="service-pets">
+                                    ${petTypeIcons}
+                                </div>
+                                <a href="#booking" class="btn-text book-service-btn" data-service="${service.id}">Book Now <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    `;
+                    
+                    servicesGrid.appendChild(serviceCard);
+                    
+                    // Add event listener to book now button
+                    const bookBtn = serviceCard.querySelector('.book-service-btn');
+                    bookBtn.addEventListener('click', function() {
+                        const serviceId = this.dataset.service;
+                        document.getElementById('service-type').value = serviceId.replace('med-', '');
+                        document.getElementById('pet-owner').focus();
+                    });
+                });
+            }
+            
+            // Function to generate SVG for service image
+            function generateServiceSVG(serviceId, bgColor) {
+                let svg = `
+                    <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="200" height="200" fill="${bgColor}"/>
+                `;
+                
+                // Add service-specific elements
+                switch (serviceId) {
+                    case 'med-1': // Check-up
+                        svg += `
+                            <circle cx="100" cy="100" r="50" fill="white" opacity="0.7"/>
+                            <rect x="80" y="70" width="40" height="60" rx="5" fill="white"/>
+                            <path d="M85 85H115" stroke="${bgColor}" stroke-width="3" stroke-linecap="round"/>
+                            <path d="M85 95H115" stroke="${bgColor}" stroke-width="3" stroke-linecap="round"/>
+                            <path d="M85 105H115" stroke="${bgColor}" stroke-width="3" stroke-linecap="round"/>
+                            <path d="M85 115H105" stroke="${bgColor}" stroke-width="3" stroke-linecap="round"/>
+                            <path d="M130 70L140 80L150 60" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+                        `;
+                        break;
+                    case 'med-2': // Vaccination
+                        svg += `
+                            <circle cx="100" cy="100" r="50" fill="white" opacity="0.7"/>
+                            <rect x="90" y="60" width="20" height="60" rx="5" fill="white"/>
+                            <rect x="95" y="120" width="10" height="20" rx="5" fill="white"/>
+                            <circle cx="100" cy="50" r="10" fill="white"/>
+                            <path d="M80 90L120 110" stroke="white" stroke-width="5" stroke-linecap="round"/>
+                            <path d="M80 110L120 90" stroke="white" stroke-width="5" stroke-linecap="round"/>
+                        `;
+                        break;
+                    case 'med-3': // Dental
+                        svg += `
+                            <circle cx="100" cy="100" r="50" fill="white" opacity="0.7"/>
+                            <path d="M70 90C70 90 80 110 100 110C120 110 130 90 130 90" stroke="white" stroke-width="5" stroke-linecap="round"/>
+                            <rect x="75" y="90" width="10" height="15" rx="2" fill="white"/>
+                            <rect x="90" y="90" width="10" height="20" rx="2" fill="white"/>
+                            <rect x="105" y="90" width="10" height="20" rx="2" fill="white"/>
+                            <rect x="120" y="90" width="10" height="15" rx="2" fill="white"/>
+                            <path d="M60 80L80 60" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                            <circle cx="85" cy="55" r="5" fill="white"/>
+                        `;
+                        break;
+                    case 'med-4': // Surgery
+                        svg += `
+                            <circle cx="100" cy="100" r="50" fill="white" opacity="0.7"/>
+                            <rect x="70" y="70" width="60" height="60" rx="5" fill="white"/>
+                            <path d="M85 100H115M100 85V115" stroke="${bgColor}" stroke-width="4" stroke-linecap="round"/>
+                            <path d="M60 60L70 70M130 60L140 70M60 140L70 130M140 140L130 130" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                        `;
+                        break;
+                    case 'med-5': // Microchipping
+                        svg += `
+                            <circle cx="100" cy="100" r="50" fill="white" opacity="0.7"/>
+                            <rect x="90" y="70" width="20" height="60" rx="2" fill="white"/>
+                            <circle cx="100" cy="60" r="15" fill="white"/>
+                            <path d="M80 100H120" stroke="${bgColor}" stroke-width="3" stroke-linecap="round"/>
+                            <path d="M70 90H130" stroke="${bgColor}" stroke-width="3" stroke-linecap="round" stroke-dasharray="5 5"/>
+                            <path d="M70 110H130" stroke="${bgColor}" stroke-width="3" stroke-linecap="round" stroke-dasharray="5 5"/>
+                        `;
+                        break;
+                    case 'med-6': // Allergy
+                        svg += `
+                            <circle cx="100" cy="100" r="50" fill="white" opacity="0.7"/>
+                            <circle cx="80" cy="80" r="10" fill="white"/>
+                            <circle cx="120" cy="80" r="10" fill="white"/>
+                            <circle cx="80" cy="120" r="10" fill="white"/>
+                            <circle cx="120" cy="120" r="10" fill="white"/>
+                            <path d="M80 80L120 120M80 120L120 80" stroke="${bgColor}" stroke-width="3" stroke-linecap="round"/>
+                            <circle cx="100" cy="100" r="15" fill="white"/>
+                            <path d="M95 100H105M100 95V105" stroke="${bgColor}" stroke-width="2" stroke-linecap="round"/>
+                        `;
+                        break;
+                    default:
+                        svg += `
+                            <circle cx="100" cy="100" r="50" fill="white" opacity="0.7"/>
+                            <path d="M80 100H120M100 80V120" stroke="${bgColor}" stroke-width="5" stroke-linecap="round"/>
+                        `;
+                }
+                
+                // Close SVG
+                svg += '</svg>';
+                
+                return svg;
+            }
+            
+            // Function to generate pet type icons
+            function generatePetTypeIcons(petTypes) {
+                let icons = '';
+                
+                petTypes.forEach(petType => {
+                    let iconClass = '';
+                    
+                    switch (petType) {
+                        case 'Dogs':
+                            iconClass = 'fa-dog';
+                            break;
+                        case 'Cats':
+                            iconClass = 'fa-cat';
+                            break;
+                        case 'Small Pets':
+                            iconClass = 'fa-rabbit';
+                            break;
+                        case 'Birds':
+                            iconClass = 'fa-dove';
+                            break;
+                        default:
+                            iconClass = 'fa-paw';
+                    }
+                    
+                    icons += `<div class="pet-icon" title="${petType}"><i class="fas ${iconClass}"></i></div>`;
+                });
+                
+                return icons;
+            }
+            
+            // Function to handle appointment submission
+            function handleAppointmentSubmission() {
+                const petOwner = document.getElementById('pet-owner').value;
+                const petName = document.getElementById('pet-name').value;
+                const petType = document.getElementById('pet-type').value;
+                const serviceType = document.getElementById('service-type').value;
+                const date = document.getElementById('appointment-date').value;
+                const time = document.getElementById('appointment-time').value;
+                const contact = document.getElementById('contact-number').value;
+                const notes = document.getElementById('special-notes').value;
+                
+                // In a real application, this would send data to a server
+                // For this demo, we'll just show a success message
+                
+                // Create notification
+                showNotification(`Appointment scheduled for ${petName}!`, 'success');
+                
+                // Reset form
+                appointmentForm.reset();
+            }
+            
+            // Function to show notification
+            function showNotification(message, type) {
+                // Create notification element if it doesn't exist
+                let notification = document.querySelector('.notification-container');
+                
+                if (!notification) {
+                    notification = document.createElement('div');
+                    notification.className = 'notification-container';
+                    document.body.appendChild(notification);
+                    
+                    // Style the notification container
+                    notification.style.position = 'fixed';
+                    notification.style.top = '20px';
+                    notification.style.right = '20px';
+                    notification.style.zIndex = '1000';
+                }
+                
+                // Create notification element
+                const notificationEl = document.createElement('div');
+                notificationEl.className = `notification ${type}`;
+                
+                // Set notification content
+                notificationEl.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 10px; background-color: ${type === 'success' ? 'var(--accent-green)' : 'var(--primary-color)'}; color: white; padding: 15px 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-md); margin-bottom: 10px;">
+                        <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}" style="font-size: 1.2rem;"></i>
+                        <div>${message}</div>
+                    </div>
+                `;
+                
+                // Add notification to container
+                notification.appendChild(notificationEl);
+                
+                // Remove notification after 3 seconds
+                setTimeout(() => {
+                    notification.removeChild(notificationEl);
+                    
+                    // Remove container if empty
+                    if (notification.children.length === 0) {
+                        document.body.removeChild(notification);
+                    }
+                }, 3000);
+            }
+        });
+    </script>
+</body>
+</html>
